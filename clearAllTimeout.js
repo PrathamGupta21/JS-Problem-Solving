@@ -1,15 +1,15 @@
-window.timeoutIds = [];
+const MY_TIMER = {
+  timeoutIds: [],
 
-const originalTimeoutFn = window.setTimeout;
+  setTimeout: function (fn, delay) {
+    let id = setTimeout(fn, delay);
+    this.timeoutIds.push(id);
+    return id;
+  },
 
-window.setTimeout = function (fn, delay) {
-  const id = originalTimeoutFn(fn, delay);
-  timeoutIds.push(id);
-  return id;
-};
-
-window.clearAllTimeout = function () {
-  while (timeoutIds.length) {
-    clearTimeout(timeoutIds.pop());
-  }
+  clearAllTimeout: function () {
+    while (this.timeoutIds.length) {
+      clearTimeout(this.timeoutIds.pop());
+    }
+  },
 };
